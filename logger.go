@@ -41,13 +41,13 @@ func (l *Logger) setPrefix(level string){
 func (l *Logger)initFile(logType string){
     date := time.Now().Format("2006-01-02")
     if logType == "Sandbox"{
-        file, err := os.OpenFile("Sandbox/Logs/Sandbox"+date+".log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+        file, err := os.OpenFile("Sandbox/Logs/"+date+".log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
         if err != nil{
             log.Fatal(err)
         }
         l.logger = log.New(file, "", log.Ldate|log.Ltime|log.Lshortfile)
     }else if logType == "Database"{
-        file, err := os.OpenFile("Database/Logs/Database"+date+".log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+        file, err := os.OpenFile("Database/Logs/"+date+".log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
         if err != nil{
             log.Fatal(err)
         }
