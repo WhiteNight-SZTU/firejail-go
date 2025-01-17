@@ -4,6 +4,8 @@ import (
     "log"
     "os"
     "time"
+    "runtime"
+    "fmt"
 )
 
 type Logger struct{
@@ -27,14 +29,19 @@ func (l *Logger) setLogLevel(level string){
 }
 
 func (l *Logger) setPrefix(level string){
+    _, file, line, ok := runtime.Caller(2)
+    callerInfo := ""
+    if ok {
+        callerInfo = fmt.Sprintf("%s:%d ", file, line)
+    }
     if level == "info"{
-        l.logger.SetPrefix("[INFO] ")
+        l.logger.SetPrefix(fmt.Sprintf("[INFO] %s", callerInfo))
     }else if level == "error"{
-        l.logger.SetPrefix("[ERROR] ")
+        l.logger.SetPrefix(fmt.Sprintf("[ERROR] %s", callerInfo))
     }else if level == "debug"{
-        l.logger.SetPrefix("[DEBUG] ")
+        l.logger.SetPrefix(fmt.Sprintf("[DEBUG] %s", callerInfo))
     }else if level == "warning"{
-        l.logger.SetPrefix("[WARNING] ")
+        l.logger.SetPrefix(fmt.Sprintf("[WARNING] %s", callerInfo))
     }
 }
 
@@ -45,13 +52,13 @@ func (l *Logger)initFile(logType string){
         if err != nil{
             log.Fatal(err)
         }
-        l.logger = log.New(file, "", log.Ldate|log.Ltime|log.Lshortfile)
+        l.logger = log.New(file, "", log.Ldate|log.Ltime)
     }else if logType == "Database"{
         file, err := os.OpenFile("Database/Logs/"+date+".log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
         if err != nil{
             log.Fatal(err)
         }
-        l.logger = log.New(file, "", log.Ldate|log.Ltime|log.Lshortfile)
+        l.logger = log.New(file, "", log.Ldate|log.Ltime)
     }
 }
 
