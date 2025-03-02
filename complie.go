@@ -51,7 +51,7 @@ func compileGo(filePath string)(string,string){
 	return path,baseName
 }
 
-//TODO: 多线程计算CPU时长和内存占用；超时处理
+//多线程计算CPU时长和内存占用
 func RunCommand(command string)(string,error,string){
 	cmd := exec.Command("sh", "-c", command)
 	var output string

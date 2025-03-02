@@ -42,7 +42,11 @@ func (l *Logger) setPrefix(level string){
         l.logger.SetPrefix(fmt.Sprintf("[DEBUG] %s", callerInfo))
     }else if level == "warning"{
         l.logger.SetPrefix(fmt.Sprintf("[WARNING] %s", callerInfo))
+    }else if level == "userOutput"{
+        //std ouput
+        l.logger.SetPrefix(fmt.Sprintf("[USEROUTPUT] %s", callerInfo))
     }
+
 }
 
 func (l *Logger)initFile(logType string){
@@ -90,6 +94,13 @@ func (l *Logger) Error(logType string,v... interface{}){
 func (l *Logger) Warning(logType string,v... interface{}){
     l.initFile(logType)
     l.setPrefix("warning")
+    l.logger.Println(v...)
+    l.setPrefix(l.level)
+}
+
+func (l *Logger) UserOutput(logType string,v... interface{}){
+    l.initFile(logType)
+    l.setPrefix("userOutput")
     l.logger.Println(v...)
     l.setPrefix(l.level)
 }

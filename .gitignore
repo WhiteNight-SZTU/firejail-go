@@ -1,3 +1,5 @@
 .code-workspace.code-workspace
 Database/databse.json
 *.log
+Sandbox/test_memory
+.gitignore
